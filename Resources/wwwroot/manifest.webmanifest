@@ -1,0 +1,21 @@
+﻿{
+    "name": "IRWA",
+    "short_name": "IRWA",
+    "background_color": "#40444B",
+    "start_url": "./index.html",
+    "description": "Control your IR devices through a simple web app.",
+    "theme_color": "#323232",
+    "display": "standalone",
+    "display_override": [
+        "minimal-ui"
+    ],
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "appicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}

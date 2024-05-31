@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IRWA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" href="logo.svg">
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <style>
+        body {
+            margin:0;
+            display:flex;
+            justify-content: center;
+            background-color: #1b1b1b;
+        }
+        .container {
+            box-sizing: border-box;
+            padding:12px;            
+            position: absolute;
+            height:100dvh;
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+            grid-template-rows: auto 150px min-content min-content min-content min-content min-content min-content auto; 
+            gap: 3px 3px; 
+            grid-template-areas: 
+                " . . . . "
+                " header header header header "
+                " brighter dimmer off on "
+                " red green blue white "
+                " orange lighter-green blue-gray flash "
+                " lighter-orange turquoise peach strobe "
+                " coral aqua lighter-pink smooth"
+                " yellow navy pink mode "
+                " . . . . "; 
+        }
+		
+        .header {
+            grid-area: header; 
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+        #header-logo {
+            height: 100%;
+            box-sizing: border-box;
+            padding:12px;
+            cursor: pointer;
+        }
+		
+        .brighter { grid-area: brighter; }
+        .dimmer { grid-area: dimmer; }
+        .off { grid-area: off; background-color: black; color:white;}
+        .on { grid-area: on; background-color: red; color: white; }
+
+        .white { grid-area: white; background-color: white;}
+        .flash { grid-area: flash; background-color: grey; color:white; font-size: 2.25cqh;}
+        .strobe { grid-area: strobe; background-color: grey; color:white; font-size: 2.25cqh;}
+        .smooth { grid-area: smooth; background-color: grey; color:white; font-size: 2.25cqh;}
+        .mode { grid-area: mode; background-color: grey; color:white; font-size: 2.25cqh;}
+        
+        .red { grid-area: red; background-color: hsl(0, 100%, 50%); } 
+        .orange { grid-area: orange; background-color: hsl(15, 100%, 50%);} 
+        .lighter-orange { grid-area: lighter-orange; background-color: hsl(30, 100%, 50%); }
+        .coral { grid-area: coral; background-color: hsl(45, 100%, 50%); }
+        .yellow { grid-area: yellow; background-color: hsl(60, 100%, 50%); }
+        
+        .green { grid-area: green; background-color: hsl(120, 100%, 50%); }
+        .lighter-green { grid-area: lighter-green; background-color: hsl(150, 98%, 50%); }
+        .turquoise { grid-area: turquoise; background-color: hsl(180, 96%, 50%); }
+        .aqua { grid-area: aqua; background-color: hsl(210, 94%, 50%); }
+        .navy { grid-area: navy; background-color: hsl(240, 92%, 50%); }
+        
+        .blue { grid-area: blue; background-color: hsl(240, 100%, 50%);}
+        .blue-gray { grid-area: blue-gray; background-color: hsl(252.5, 96%, 53%);}
+        .peach { grid-area: peach; background-color: hsl(265, 94%, 56%);}
+        .lighter-pink { grid-area: lighter-pink; background-color: hsl(277.5, 92%, 58%);}
+        .pink { grid-area: pink; background-color: hsl(290, 90%, 60%);}
+
+        button {
+            width: 100%;
+            position: relative;
+            font-size: 5cqh;
+            justify-self: center;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border-radius: 100%;            
+            box-sizing: border-box;
+            border: 2px solid rgba(0,0,0,0.25);
+            mask-image: radial-gradient(rgba(0,0,0,1),rgba(0,0,0,0.7));
+        }
+        button:active {
+            mask-image: radial-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img id="header-logo" src="./logo.svg" onclick="promptHostAddress()" />
+        </div>
+        <!-- Thanks to Anil Aras for the IR codes! (https://github.com/anilaras/OSRAM-Led-Star-RGBW-Remote-E27-9W-Remote-control-codes/)-->
+        <button class="brighter" onclick="sendCode(this, 0x00FF00FF)">+</button>
+        <button class="dimmer" onclick="sendCode(this, 0x00FF40BF)">-</button>
+        <button class="off" onclick="sendCode(this, 0x00FF609F)">OFF</button>
+        <button class="on" onclick="sendCode(this, 0x00FFE01F)">ON</button>
+        <button class="white" onclick="sendCode(this, 0x00FFC03F)">W</button>
+        <button class="blue" onclick="sendCode(this, 0x00FF50AF)">B</button>
+        <button class="green" onclick="sendCode(this, 0x00FF906F)">G</button>
+        <button class="red" onclick="sendCode(this, 0x00FF10EF)">R</button>
+        <button class="flash" onclick="sendCode(this, 0x00FFF00F)">FLASH</button>
+        <button class="strobe" onclick="sendCode(this, 0x00FFC837)">STROBE</button>
+        <button class="smooth" onclick="sendCode(this, 0x00FFE817)">SMOOTH</button>
+        <button class="mode" onclick="sendCode(this, 0x00FFD827)">MODE</button>
+        <button class="orange" onclick="sendCode(this, 0x00FF30CF)"></button>
+        <button class="lighter-orange" onclick="sendCode(this, 0x00FF08F7)"></button>
+        <button class="coral" onclick="sendCode(this, 0x00FF28D7)"></button>
+        <button class="yellow" onclick="sendCode(this, 0x00FF18E7)"></button>
+        <button class="lighter-green" onclick="sendCode(this, 0x00FFB04F)"></button>
+        <button class="turquoise" onclick="sendCode(this, 0x00FF8877)"></button>
+        <button class="aqua" onclick="sendCode(this, 0x00FFA857)"></button>
+        <button class="navy" onclick="sendCode(this, 0x00FF9867)"></button>
+        <button class="blue-gray" onclick="sendCode(this, 0x00FF708F)"></button>
+        <button class="peach" onclick="sendCode(this, 0x00FF48B7)"></button>
+        <button class="lighter-pink" onclick="sendCode(this, 0x00FF6897)"></button>
+        <button class="pink" onclick="sendCode(this, 0x00FF58A7)"></button>
+    </div>
+    <script>
+        //@ts-check
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js")
+                .then(() => console.log(`Service worker registered successfully.`), 
+                    error => console.warn(`Service worker registration failed: ${error}.`));
+        }
+
+        // The API endpoint for sending "raw" 32-bit IR messages (as uint32)
+        const apiEndpointSendRaw = "/api/sendraw";
+        // The key of the local storage property storing any custom hostname/IP 
+        // the IR commands should be sent to
+        const localStorageHostKey = "irwaHost";
+        const getIrwaHost = () => localStorage.getItem(localStorageHostKey);
+        const setIrwaHost = value => {
+            if (value == null || value.trim().length === 0) {
+                localStorage.removeItem(localStorageHostKey);
+            } else {
+                localStorage.setItem(localStorageHostKey.trim(), value);
+            }            
+        }
+
+        const promptHostAddress = () => {
+            let currentHost = getIrwaHost();
+            let newHost = prompt("Enter the IP/hostname of your IRWA device (or hit cancel to abort)", 
+                currentHost ?? "");
+            if (newHost != null) {
+                if (newHost.trim().length === 0) {
+                    newHost = null;
+                }
+                setIrwaHost(newHost);
+            }
+        };
+
+        // Sends out a 32-bit uint code to the device
+        const sendCode = async (/** @type {HTMLButtonElement} */ sender, /** @type {number} */ code) => {            
+            sender.disabled = true;
+            let irwaHost = getIrwaHost();
+            let url = apiEndpointSendRaw;
+            if (irwaHost !== null) {
+                url = `http://${irwaHost}${url}`;
+            }
+
+            try {
+                let response = await fetch(url, {
+                    method: "POST",
+                    body: code.toString()                
+                });
+                if (!response.ok) {
+                    console.warn(`Code couldn't be sent (status ${response.status}).`);
+                }
+            } catch(error) {
+                console.warn("An unexpected error has occurred: " + error);
+            }
+            sender.disabled = false;
+        };
+    </script>
+</body>
+
+</html>
