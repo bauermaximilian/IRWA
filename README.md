@@ -23,6 +23,11 @@ The IR commands are 32-bit unsigned integers encoded using the NEC protocol - se
 
 The web server is a custom implementation using the `HttpListener` from `System.Net.Http`, executing the incoming requests using a thread pool (in the hopes of better performance due to the recycling of the same threads instead of spawning new ones for every request). The web server implementation was also optimized for improved stability and resilience against network outages or other unexpected issues and should recover from such events. It has support for HTTPS, but while testing this feature, the app became almost unusable in terms of speed, which is why HTTP is used for now. That, unfortunately, prevents the app from being installed as PWA, as all other requirements for this would be fulfilled.
 
+## References and resources
+- [OSRAM LED Star IR Codes](https://github.com/anilaras/OSRAM-Led-Star-RGBW-Remote-E27-9W-Remote-control-codes/)
+- [NEC Infrared Transmission Protocol](https://techdocs.altium.com/display/FPGA/NEC+Infrared+Transmission+Protocol)
+- [nanoFramework ESP32 RMT API examples](https://docs.nanoframework.net/samplesdetails/Hardware.Esp32.Rmt/README.html)
+
 ## License
 
 ### Logo
